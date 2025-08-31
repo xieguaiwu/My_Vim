@@ -1,0 +1,232 @@
+set nocompatible
+
+"appearance"
+syntax on
+set number
+set relativenumber
+
+set showmatch
+set undofile
+set undodir=/home/xieguaiwu/.vim/undodir
+
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set encoding=utf-8
+
+set termguicolors
+
+"cursor"
+"if exists('$TMUX')
+"    let &t_SI="\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+"    let &t_SR="\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+"    let &t_EI="\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+"else 
+"    let &t_SI="\<Esc>]50;CursorShape=1\x7"
+"    let &t_SR="\<Esc>]50;CursorShape=2\x7"
+"    let &t_EI="\<Esc>]50;CursorShape=0\x7"
+"endif
+
+
+set guicursor=a:beam-blinkon50-blinkoff50
+
+"n-v-c:block-blinkon50,i-ci-ve:ver25-blinkon50,r-cr:hor20-blinkon50,o:hor50-blinkon50
+
+set cursorcolumn
+
+"technical"
+set notimeout
+set ttimeout
+set timeoutlen=300
+set noreadonly
+
+"using"
+set autoindent
+set autoread
+set ruler
+set smartcase
+set ignorecase
+set splitright
+set splitbelow
+set wildmenu
+set hidden
+
+set clipboard=unnamedplus
+set clipboard=unnamed
+
+"move lines up and down"
+nnoremap J :m '>+1<CR>gv=gv
+nnoremap K :m '<-2<CR>gv=gv
+
+"muti-window"
+nnoremap sl :set splitright<CR>:vsplit<CR>"right"
+nnoremap sh :set nosplitright<CR>:vsplit<CR>"left"
+nnoremap sk :set nosplitbelow<CR>:split<CR>"up"
+nnoremap sj :set splitbelow<CR>:split<CR>"down"
+
+
+""silent !
+" for kitty terminal
+set mouse=a
+set ttymouse=sgr
+set balloonevalterm
+" Styled and colored underline support
+let &t_AU = "\e[58:5:%dm"
+let &t_8u = "\e[58:2:%lu:%lu:%lum"
+let &t_Us = "\e[4:2m"
+let &t_Cs = "\e[4:3m"
+let &t_ds = "\e[4:4m"
+let &t_Ds = "\e[4:5m"
+let &t_Ce = "\e[4:0m"
+" Strikethrough
+let &t_Ts = "\e[9m"
+let &t_Te = "\e[29m"
+" Truecolor support
+let &t_8f = "\e[38:2:%lu:%lu:%lum"
+let &t_8b = "\e[48:2:%lu:%lu:%lum"
+let &t_RF = "\e]10;?\e\\"
+let &t_RB = "\e]11;?\e\\"
+" Bracketed paste
+let &t_BE = "\e[?2004h"
+let &t_BD = "\e[?2004l"
+let &t_PS = "\e[200~"
+let &t_PE = "\e[201~"
+" Cursor control
+let &t_RC = "\e[?12$p"
+let &t_SH = "\e[%d q"
+let &t_RS = "\eP$q q\e\\"
+let &t_SI = "\e[5 q"
+let &t_SR = "\e[3 q"
+let &t_EI = "\e[1 q"
+let &t_VS = "\e[?12l"
+" Focus tracking
+let &t_fe = "\e[?1004h"
+let &t_fd = "\e[?1004l"
+execute "set <FocusGained>=\<Esc>[I"
+execute "set <FocusLost>=\<Esc>[O"
+" Window title
+let &t_ST = "\e[22;2t"
+let &t_RT = "\e[23;2t"
+
+" vim hardcodes background color erase even if the terminfo file does
+" not contain bce. This causes incorrect background rendering when
+" using a color theme with a background color in terminals such as
+" kitty that do not support background color erase.
+let &t_ut=''
+
+"compile func stuff"
+func! CompileRunGcc()
+        exec "w"
+        let file = expand('%')
+        let base = expand('%<')
+        let dir = expand('%:p:h')
+
+        if empty(file) || !filereadable(file)
+            echo "Error: File not readable -" . file
+            return
+        endif
+
+        if &filetype == 'cpp'|| &filetype == 'cc'
+            exec "!g++ -g % -o -no-pie %< && ./%<"
+        endif
+        if &filetype == 'c'
+            exec "!gcc -g % -o %< && ./%<"
+        endif
+        if &filetype == 'java'
+            exec "!javac % && java ./%"
+        endif
+        if &filetype == 'python'
+		    exec "!python %"
+        endif
+        if &filetype == 'sh'
+		    exec "!sh %"
+        endif
+endfunc
+
+nnoremap <C-b> :call CompileRunGcc() <CR>
+
+"plug"
+call plug#begin('~/.vim/plugged')
+
+"lsp
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+"theme
+Plug 'junegunn/seoul256.vim'
+"Plug 'tomasr/molokai'
+Plug 'phanviet/vim-monokai-pro'
+
+"tree
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'majutsushi/tagbar'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+"Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-unimpaired'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vim-airline/vim-airline'
+Plug 'godlygeek/tabular'
+Plug 'xuhdev/singlecompile'
+Plug 'chiel92/vim-autoformat'
+Plug 'mileszs/ack.vim'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ppwwyyxx/vim-pinyinsearch'
+"Plug 'thaerkh/vim-workspace'
+"Plug 'puremourning/vimspector'
+
+"syntax
+Plug 'plasticboy/vim-markdown'
+Plug 'fatih/vim-go'
+Plug 'scrooloose/syntastic'
+
+call plug#end()
+"for molokai theme"
+"set background=dark
+"colorscheme molokai
+"let g:molokai_original=1
+colorscheme monokai_pro
+
+"for Nerdtree"
+nnoremap <silent> <C-e> :NERDTreeToggle<CR>
+"for autoformat"
+nnoremap <C-f> :Autoformat<CR>
+"for singlecompile"
+nnoremap <F8> :SCCompile<CR>
+nnoremap <F9> :SCCompileRun<CR>
+"for coc.nvim"
+"inoremap <silent><expr> <TAB>
+            \ coc#pum#visible() ? coc#pum#next(1) :
+            \ CheckBackspace() ?\<Tab>" :
+            \ coc#refresh()
+"inoremap <expr><S-TAB> <CR> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+"inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+function! CheckBackspace() abort 
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1] =~# '\s'
+endfunc
+
+"nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gy <Plug>(coc-type-definition)
+"nmap <silent> gi <Plug>(coc-implementation)
+"nmap <silent> gr <Plug>(coc-references)
+
+inoremap <silent><expr> <A-z> coc#refresh()
+
+"for pinyinsearch"
+let g:PinyinSearch_Dict = '/home/xieguaiwu/.vim/plugged/vim-pinyinsearch/PinyinSearch.dict'
+nnoremap ? :call PinyinSearch()<CR>
+nnoremap <Leader>pn :call PinyinNext()<CR>
+
+"for vim-workspace"
+"let g:workspace_autocreate = 1
+"let g:workspace_persist_undo_history = 1
+"let g:workspace_undodir = '/home/xieguaiwu/.vim/undodir'
+"let g:workspace_autosave = 0
+"let g:workspace_session_name = 'Session.vim'
+"let g:workspace_session_directory = '/home/xieguaiwu/.vim/sessions'
