@@ -169,8 +169,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "theme
 Plug 'junegunn/seoul256.vim'
 "Plug 'tomasr/molokai'
-Plug 'phanviet/vim-monokai-pro'
-"Plug 'erichdongubler/vim-sublime-monokai'
+"Plug 'phanviet/vim-monokai-pro'
+Plug 'erichdongubler/vim-sublime-monokai'
 
 "tree
 Plug 'preservim/nerdtree'
@@ -198,25 +198,25 @@ Plug 'Yggdroot/indentLine'
 Plug 'vim-scripts/indentpython.vim'
 
 call plug#end()
-"for molokai theme"
+"for monokai theme"
 "set background=dark
 "colorscheme molokai
-colorscheme monokai_pro
-"colorscheme sublimemonokai
-"let java_comment_strings=1
-"let java_highlight_functions=1
-"let java_highlight_java_lang_ids=1
-"let g:go_highlight_format_strings = 1
-"let g:go_highlight_function_arguments = 1
-"let g:go_highlight_function_calls = 1
-"let g:go_highlight_functions = 1
-"let g:go_highlight_operators = 1
-"let g:go_highlight_types = 1
-"let g:go_highlight_extra_types = 1
-"let g:go_highlight_fields = 1
-"let g:go_highlight_generate_tags = 1
-"let g:go_highlight_variable_assignments = 1
-"let g:go_highlight_variable_declarations = 1
+"colorscheme monokai_pro
+colorscheme sublimemonokai
+let java_comment_strings=1
+let java_highlight_functions=1
+let java_highlight_java_lang_ids=1
+let g:go_highlight_format_strings = 1
+let g:go_highlight_function_arguments = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_types = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_variable_assignments = 1
+let g:go_highlight_variable_declarations = 1
 
 "for Nerdtree"
 nnoremap <silent> <C-e> :NERDTreeToggle<CR>
